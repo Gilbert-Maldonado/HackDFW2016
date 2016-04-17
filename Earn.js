@@ -109,10 +109,10 @@ function getWelcomeResponse(callback) {
     var sessionAttributes = {};
     var cardTitle = "Welcome";
     var speechOutput = "Welcome to the Earn interface. " +
-        "You can set your task or ask for your current task";
+        "You can set your task or habit and ask for your current task or habit. ";
     // If the user either does not reply to the welcome message or says something that is not
     // understood, they will be prompted again with this text.
-    var repromptText = "Please set or ask for your current task";
+    var repromptText = "Please set or ask for your current task or habit.";
     var shouldEndSession = false;
 
     callback(sessionAttributes,
@@ -211,10 +211,10 @@ function getTaskFromSession(intent, session, callback, isChore) {
     } else {
         if(isChore) {
             speechOutput = "I'm not sure what your current chore is, you can say, set my current chore " +
-            " to cut the grass ";
+            " to cut the grass.";
         } else {
-            speechOutput = "I'm not sure what your current habit is, you can say, my current habit " +
-            " is waking up in the morning";
+            speechOutput = "I'm not sure what your current habit is, you can say, set my current habit " +
+            " to be healthy.";
         }
 
         
