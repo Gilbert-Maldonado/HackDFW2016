@@ -142,8 +142,12 @@ function setNewUser(intent, session, callback) {
     if(userName !== undefined && userName.value !== undefined) {
         sessionAttributes = createUserName(userName);
         // Do the API call to store the new user to Mongo, We gucci.
+
+        var http = require('http');
+        var urlPrefix = "www.utexas.io";
         
-        
+        return{"name": userName}
+
         speechOutput = "The user name has been set. Would you like to set your habit or chore? You " +
             "can also view your current habit or chore.";
         repromptText = "You can set me your current user name by saying, set user name to blank.";
