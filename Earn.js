@@ -17,11 +17,11 @@ exports.handler = function (event, context) {
          * Uncomment this if statement and populate with your skill's application ID to
          * prevent someone else from configuring a skill that sends requests to this function.
          */
-        /*
-        if (event.session.application.applicationId !== "amzn1.echo-sdk-ams.app.b6f9336c-e795-42cf-af9d-38207d41f50d") {
+        
+        if (event.session.application.applicationId !== "amzn1.echo-sdk-ams.app.67708be1-38d5-4ac0-9fcd-b31ce6d747d8") {
              context.fail("Invalid Application ID");
         }
-        */
+        
 
         if (event.session.new) {
             onSessionStarted({requestId: event.request.requestId}, event.session);
@@ -138,7 +138,7 @@ function setTaskInSession(intent, session, callback) {
     var sessionAttributes = {};
     var shouldEndSession = false;
     var speechOutput = "";
-    var isChore = intentName == "SetChoreIntent";
+    var isChore = intentName === "SetChoreIntent";
     if(isChore) {
         setTaskTo = intent.slots.Chores;
     }
@@ -198,7 +198,11 @@ function getTaskFromSession(intent, session, callback, isChore) {
     var speechOutput = "";
 
     if (session.attributes) {
-        currentTask = session.attributes.currentTask;
+        if(isChore) {
+            currentTask = session.attributes.currentChore;    
+        } else {
+            currentTask = session.attributes.currentHabit;
+        }
     }
 
     if (currentTask) {
