@@ -9,6 +9,11 @@
 
 // Route the incoming request based on type (LaunchRequest, IntentRequest,
 // etc.) The JSON body of the request is provided in the event parameter.
+
+
+var http = require('http')
+
+
 exports.handler = function (event, context) {
     try {
         console.log("event.session.application.applicationId=" + event.session.application.applicationId);
@@ -143,17 +148,17 @@ function setNewUser(intent, session, callback) {
         sessionAttributes = createUserName(userName);
         // Do the API call to store the new user to Mongo, We gucci.
 
-        var http = require('http');
-        var urlPrefix = "www.utexas.io";
-        
-        return{"name": userName}
+        var jsonresponse = getJSON("POST","register", {"name":"Gilly","email":"gilly@gmail.com", "password":"swagfalcon"});
 
-        speechOutput = "The user name has been set. Would you like to set your habit or chore? You " +
+        if(jsonresponse != null ) {
+            speechOutput += "New user Successful. ";
+        }
+        speechOutput += "The user name has been set. Would you like to set your habit or chore? You " +
             "can also view your current habit or chore.";
-        repromptText = "You can set me your current user name by saying, set user name to blank.";
+        repromptText += "You can set me your current user name by saying, set user name to blank.";
     } else {
-        speechOutput = "I'm not sure if I understood the name. Please try again."
-        repromptText = "Sorry. Try saying, set my user name to blank.";
+        speechOutput += "I'm not sure if I understood the name. Please try again."
+        repromptText += "Sorry. Try saying, set my user name to blank.";
     }
 
     callback(sessionAttributes,
@@ -165,6 +170,26 @@ function createUserName(userName) {
         userName: userName
     };
 }
+
+
+var getJSON = function(method, url, data) {
+
+
+    var request = new http.ClientRequest({
+        hostname: "www.utexas.io",
+        port: 80,
+        path: ("/" + url),
+        method: method,
+        headers: {
+            "Content-Type": "application/json",
+            "Content-Length": Buffer.byteLength(data)
+        }
+    })
+
+    request.end(body)
+}
+
+
 
 /**
  * Sets the chore or habit in the session and prepares the speech to reply to the user.
