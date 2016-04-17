@@ -1,0 +1,11 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/habit_detail"
+    style="?android:attr/textAppearanceLarge"
+    android:drawableStart="@drawable/ic_assignment_turned_in_black_48px"
+    android:drawablePadding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    android:textIsSelectable="true"
+    tools:context="me.reward.rewardme.HabitDetailFragment" />

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="me.reward.rewardme" >
+
+    <!-- To access Google+ APIs: -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!--
+ To retrieve OAuth 2.0 tokens or invalidate tokens to disconnect a user. This disconnect
+     option is required to comply with the Google+ Sign-In developer policies
+    -->
+    <!-- <uses-permission android:name="android.permission.USE_CREDENTIALS" /> &lt;!&ndash; To retrieve the account name (email) as part of sign-in: &ndash;&gt; -->
+    <!-- <uses-permission android:name="android.permission.GET_ACCOUNTS" /> &lt;!&ndash; To auto-complete the email text field in the login form with the user's emails &ndash;&gt; -->
+    <!-- <uses-permission android:name="android.permission.READ_PROFILE" /> -->
+    <!-- <uses-permission android:name="android.permission.READ_CONTACTS" /> -->
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.Dark.ActionBar" >
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.Dark" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SignUpActivity"
+            android:label="@string/title_activity_sign_up"
+            android:theme="@style/AppTheme.Dark" >
+        </activity>
+        <activity
+            android:name=".HabitListActivity"
+            android:label="@string/title_habit_list"
+            android:theme="@style/AppTheme.Dark.ActionBar" >
+        </activity>
+        <activity
+            android:name=".HabitDetailActivity"
+            android:label="@string/title_habit_detail"
+            android:parentActivityName=".HabitListActivity"
+            android:theme="@style/AppTheme.Dark.ActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="me.reward.rewardme.HabitListActivity" />
+        </activity>
+        <activity
+            android:name=".NewHabit"
+            android:label="@string/title_activity_new_habit"
+            android:theme="@style/AppTheme.Dark.ActionBar.Compat">
+        </activity>
+    </application>
+
+</manifest>
