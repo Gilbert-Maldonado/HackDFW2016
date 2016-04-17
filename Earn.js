@@ -78,7 +78,10 @@ function onIntent(intentRequest, session, callback) {
         intentName = intentRequest.intent.name;
 
     // Dispatch to your skill's intent handlers
-    if ("SetChoreIntent" === intentName || "SetHabitIntent" === intentName) {
+    if("NewUserIntent" === intentName) {
+        setNewUser(intent, session, callback);
+    }
+    if else("SetChoreIntent" === intentName || "SetHabitIntent" === intentName) {
         setTaskInSession(intent, session, callback);
     } else if ("WhatsMyChoreIntent" === intentName || "WhatsMyHabitIntent" === intentName) {
         var isChore = "WhatsMyChoreIntent" === intentName;
@@ -128,6 +131,37 @@ function handleSessionEndRequest(callback) {
     callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
 }
 
+function setNewUser(intent, session, callback) {
+    var intentName = intent.name;
+    var repromtText = "";
+    sessionAttributes = {};
+    shouldEndSession = false;
+    var speechOutput = "";
+    var userName = intentName.slots.NewUser;
+
+    if(userName !== undefined && userName.value !== undefined) {
+        sessionAttributes = createUserName(userName);
+        // Do the API call to store the new user to Mongo, We gucci.
+        
+        
+        speechOutput = "The user name has been set. Would you like to set your habit or chore? You " +
+            "can also view your current habit or chore.";
+        repromptText = "You can set me your current user name by saying, set user name to blank.";
+    } else {
+        speechOutput = "I'm not sure if I understood the name. Please try again."
+        repromptText = "Sorry. Try saying, set my user name to blank.";
+    }
+
+    callback(sessionAttributes,
+         buildSpeechletResponse(intentName, speechOutput, repromptText, shouldEndSession));
+}
+
+function createUserName(userName) {
+    return {
+        userName: userName
+    };
+}
+
 /**
  * Sets the chore or habit in the session and prepares the speech to reply to the user.
  */
@@ -153,13 +187,13 @@ function setTaskInSession(intent, session, callback) {
         if(isChore) {
             speechOutput += "chore has been set " + currentTask + ". You can ask me " +
                 "what your current chore is by saying, what's my current chore?";
-            repromptText = "You can ask me your current chore by saying, what's " +
-                "my current chore?";
+            repromptText = "You can set your current chore by saying, set " +
+                "my current chore to blank.";
         } else {
             speechOutput += "habit has been set " + currentTask + ". You can ask me " +
             "what your current habit is by saying, what's my current habit?";
-            repromptText = "You can ask me your current habit by saying, what's " +
-                "my current habit?";
+            repromptText = "You can set your current habit by saying, set " +
+                "my current habit to blank.";
         }
 
     } else {
@@ -270,4 +304,6 @@ Check my balance
 See my current task
 See the my current task that I'm working on
 I finished my current task
+
+
 */
